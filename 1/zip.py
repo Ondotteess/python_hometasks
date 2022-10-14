@@ -5,4 +5,4 @@ arr3 = []
 for i in range(min(len(arr1), len(arr2))):
     arr3.append((arr1[i], arr2[i]))
 
-print(arr3)
+print(arr3) 
