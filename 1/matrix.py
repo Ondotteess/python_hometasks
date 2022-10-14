@@ -9,4 +9,4 @@ for s2 in s1:
         s2[i] = float(s2[i])
     matrix.append(s2)
 
-print(matrix[1][2])
+print(matrix[1][2])    # 6.0
