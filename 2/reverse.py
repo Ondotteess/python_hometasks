@@ -10,4 +10,4 @@ for s in a.items():
 
     c.add(s[1])
 
-print(b) # # {97832: ('Ivanov', 'Kuznecov'), 55521: ('Petrov', 'Matanov'), 99999: ('Baranov', 'Sidorov'), 12345: 'Fihtengolc'}
+print(b) # {97832: ('Ivanov', 'Kuznecov'), 55521: ('Petrov', 'Matanov'), 99999: ('Baranov', 'Sidorov'), 12345: 'Fihtengolc'}
