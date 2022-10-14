@@ -1,4 +1,4 @@
-s1 = input("enter the matrix: ")
+s1 = input("enter the matrix: ")    # 1 2 3 | 4 5 6 | 7 8 9 
 s1 = s1.split("|")
 
 matrix = []
