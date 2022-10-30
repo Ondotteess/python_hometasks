@@ -1,38 +1,23 @@
-def checkArr(a):
-    for x in a:
+def flatten(arr, depth = -1):
+
+    if depth == 0:
+        return arr
+    
+    ret_arr = []
+
+    for x in arr:
         if isinstance(x, list):
-            return False
-    return True
+            ret_arr += flatten(x, depth - 1)
 
-def _flatten(a):
-    __a = a
-    while True:
-        _a = []
-        for x in __a:
-            if isinstance(x, int): _a.append(x)
-            else: 
-                _a = _a + x
-        __a = _a
+        else:
+            ret_arr += [x]
 
-        if checkArr(__a):
-            return __a
+    return ret_arr
 
-def flatten(a, depth=-1):
-    __a = a
-    i = 1
-    while True:
-        _a = []
-        for x in __a:
-            if isinstance(x, int): _a.append(x)
-            else: 
-                _a = _a + x
-        __a = _a
-        if checkArr(__a) or i == depth:
-            return __a
-        i += 1
-        
 
-a = [1, 2, [4, 5], [6, [7]], 8]
 
-print(flatten(a, depth=1))  #  [1, 2, 4, 5, 6, [7], 8]
-print(_flatten(a))          #  [1, 2, 4, 5, 6, 7, 8]
+print(flatten([1, 2, 4, [[5]]], 1))                                 #   [1, 2, 4, [5]]
+
+print(flatten([1, 2, 3, [[[4, 5, [6]]], 7]], 2))                    #   [1, 2, 3, [4, 5, [6]], 7]
+
+print(flatten([1, 2, [[[[[[[[[[[[[[[[[[[4]]]]]]]]]]]]]]]]]]]]))     #   [1, 2, 4]
