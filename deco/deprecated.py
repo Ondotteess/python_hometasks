@@ -5,7 +5,7 @@ def deprecated(func=None, since=None, will_be_removed=None):
         return functools.partial(deprecated, since=since, will_be_removed=will_be_removed)
 
     def inner(*args, **kwargs):
-        #func(*args, **kwargs)
+        
         if since != None and will_be_removed != None:
             print(f"Warning: {func.__name__} is deprecated since version {since}. It will be removed in version {will_be_removed}")
 
