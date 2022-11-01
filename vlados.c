@@ -92,5 +92,6 @@ int main() {
 	}
 	printf("\n");
 	printArr(new_arr1, size1);
-
+	printf("\n");
+	printArr(new_arr2, size2);
 }
