@@ -11,7 +11,7 @@ def deprecated(func=None, since=None, will_be_removed=None):
         else: first = f"Warning: {func.__name__} is deprecated."
 
         if will_be_removed: second = f" It will be renoved in version {will_be_removed}."
-        else: second = " It will be renoved in future versions."
+        else: second = " It will be removed in future versions."
 
         print(first + second)
 
