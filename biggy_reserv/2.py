@@ -5,9 +5,13 @@ import os
 
 
 
-                
-
 def solution(script: TextIO, output: TextIO) -> None:
+
+        def file_in_dir(path, ext):
+                for file in os.listdir(path):
+                        if ext in file:
+                                return 1
+                return 0
 
         def tree(path, level=0, pattern=None, depth=-1, exten=0, first = '│'):
 
@@ -15,11 +19,15 @@ def solution(script: TextIO, output: TextIO) -> None:
                         return 0
                 p = path.split('\\')
 
-                if level == 1 and pattern == 3:
-                        ident = '└' + '─' * 2 + ' '
 
-                elif level == 1 and pattern == 1:
+                if level == 1 and (pattern == 1 or pattern == 3) and exten != 0:
                         ident = '├' + '─' * 2 + ' '
+
+                elif level == 1 and pattern == 1 and exten == 0:
+                        ident = '├' + '─' * 2 + ' '
+
+                elif level == 1 and pattern == 3 and exten == 0:
+                        ident = '└' + '─' * 2 + ' '
 
                 elif level == 2 and pattern == 1:
                         ident = first + ' ' * (level - 1) * 3 + '├' + 2 * '─' + ' '
@@ -42,13 +50,17 @@ def solution(script: TextIO, output: TextIO) -> None:
 
 
                 if os.path.isdir(path):
-                        if level == 1 and p[-1] == os.listdir(os.path.join(path, os.pardir))[-1]:
-                                ident = '└' + '─' * 2 + ' '
-                                print(f"{ident}{p[-1]}")
-                                first = ' '
-                                #output.write(f"{ident}{p[-1]}\n")
 
-                        elif level != 0 and exten == 0:
+                        if level == 1 and exten != 0:
+                                l = os.listdir(os.path.join(path, os.pardir))
+                                _l = [x for x in l if os.path.isdir(x)]
+                                if p[-1] == _l[-1]:
+                                        print(_l)
+                                        ident = '└' + '─' * 2 + ' '
+                                        first = ' '
+
+
+                        if level != 0 and exten == 0:
                                 #print(f"{ident}{p[-1]}")
                                 output.write(f"{ident}{p[-1]}\n")
 
@@ -60,10 +72,10 @@ def solution(script: TextIO, output: TextIO) -> None:
                         for dir in os.listdir(path):
                                 sort_dir = sorted(os.listdir(path))
 
-                                if len(os.listdir(path)) == 1:
-                                        tree(path + '\\' + dir, level + 1, pattern=2, depth=depth-1, exten=exten, first= first)
+                                #if len(os.listdir(path)) == 0:
+                                #        tree(path + '\\' + dir, level + 1, pattern=2, depth=depth-1, exten=exten, first= first)
 
-                                elif dir == sort_dir[-1]:
+                                if dir == sort_dir[-1]:
                                         tree(path + '\\' + dir, level + 1, pattern=3, depth=depth-1, exten=exten, first = first)
 
                                 else:
@@ -78,7 +90,7 @@ def solution(script: TextIO, output: TextIO) -> None:
 
                         else:
                                 output.write(f"{ident}{p[-1]}\n")
-                                print(f"{ident}{p[-1]}")
+
 
 
 
@@ -103,7 +115,8 @@ def solution(script: TextIO, output: TextIO) -> None:
                                 os.chdir(command[1])
                                 #print('dir changed')
                         else:
-                                os.chdir(os.pardir)
+                                for _ in range(len(command[-1].split('\\'))):
+                                        os.chdir(os.pardir)
                                 #print('dir changed')
 
 
@@ -186,14 +199,21 @@ def solution(script: TextIO, output: TextIO) -> None:
                                                 file.write(line.strip()+'\n')
 
                 if command[0] == 'pwd':
+                        #output.write(os.getcwd())
+                        print(os.getcwd())
+                        if '>' in command:
+                                with open(command[-1], 'w', encoding='utf-8') as file:
+                                        file.write(os.getcwd())
+
                         print(os.getcwd())
 
                 if command[0] == 'tree':
                         output.write('.\n')
                         d = -1
-                        ext = ''
+                        ext = 0
                         if '-L' in command:
                                 d = int(command[command.index('-L')+1])+1
+
                         if '-P' in command:
                                 ext ='.'+command[command.index('-P')+1].strip('""').split(".")[-1]
 
