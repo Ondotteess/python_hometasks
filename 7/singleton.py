@@ -19,5 +19,5 @@ c1 = SingleCounter()
 c2 = SingleCounter()
 c3 = Counter()
 
-print(c1 == c2 == c3)
-print(c1 == c2)
+print(c1 == c2 == c3)   # False
+print(c1 == c2)         # True
