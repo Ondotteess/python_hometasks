@@ -28,7 +28,7 @@ for x in range(SQR_SIZE):
 
 start = time()
 for i in range(128):
-    life = next(field)
+    field = next(field)
 end = time()
 
 print(end-start)            #       17.4506413936615
